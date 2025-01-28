@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora básica</title>
+    <link rel="stylesheet" href="estilo de la calculadora.css">
+</head>
+<body>
+<div class="contenedor-calculadora">
+<h1>Calculadora</h1>
+    <div class="calculadora">
+        <input type="text" id="display" disabled aria-label="Pantalla de la calculadora">
+        <div class="buttons">
+            <button onclick="clearDisplay()" aria-label="Borrar todo">C</button>
+            <button onclick="appendToDisplay('1')" aria-label="Uno">1</button>
+            <button onclick="appendToDisplay('2')" aria-label="Dos">2</button>
+            <button onclick="appendToDisplay('3')" aria-label="Tres">3</button>
+            <button onclick="appendToDisplay('+')" aria-label="Más">+</button>
+            <button onclick="appendToDisplay('4')" aria-label="Cuatro">4</button>
+            <button onclick="appendToDisplay('5')" aria-label="Cinco">5</button>
+            <button onclick="appendToDisplay('6')" aria-label="Seis">6</button>
+            <button onclick="appendToDisplay('-')" aria-label="Menos">-</button>
+            <button onclick="appendToDisplay('7')" aria-label="Siete">7</button>
+            <button onclick="appendToDisplay('8')" aria-label="Ocho">8</button>
+            <button onclick="appendToDisplay('9')" aria-label="Nueve">9</button>
+            <button onclick="appendToDisplay('*')" aria-label="Multiplicar">*</button>
+            <button onclick="appendToDisplay('0')" aria-label="Cero">0</button>
+            <button onclick="appendToDisplay('.')" aria-label="Punto">.</button>
+            <button onclick="calculateResult()" aria-label="Igual">=</button>
+            <button onclick="appendToDisplay('/')" aria-label="Dividir">/</button>
+        </div>
+    </div>
+    <script >
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+        function appendToDisplay(value) {
+            const display = document.getElementById('display');
+            const operators = ['+', '-', '*', '/'];
+            const lastChar = display.value.slice(-1);
+        
+            if (operators.includes(value) && operators.includes(lastChar)) {
+                display.value = display.value.slice(0, -1) + value;
+            } else {
+                display.value += value;
+           }
+        }
+        function calculateResult() {
+            const display = document.getElementById('display');
+            try {
+                display.value = Function(`'use strict'; return (${display.value})`)();
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }        
+    </script>
+</body>
+</html>
